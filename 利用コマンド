@@ -1,0 +1,10 @@
+node-debug bin/www
+
+
+mongo
+show dbs
+use XXXX
+show collections
+db.YYYY.find()
+
+
