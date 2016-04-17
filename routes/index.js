@@ -41,23 +41,25 @@ router.get('/test', function (req, res, next) {
 
 router.post('/create_user', function(req, res){
 	var user_data = req.body;
-	var password = user_data.password;
-
-	var sha512 = crypto.createHash('sha512');
-	sha512.update(password);
-	var hashed_password = sha512.digest('hex');
-
-	user_data["hashed_password"] = hashed_password;
-
-
-	mongo.create_user(user_data, function(err, obj){
-		if(err){
-			res.json({result:false, message:"saving data failed"});
-		}else{
-			res.json({result:true, message:"user data has been registered successfully"});
+	var email_address = user_data.email;
+	mongo.check_user_existence(email_address, function(err, users){
+		if(users.length > 0){
+			res.json({result:false, message:"the email address is already registered"});
+			return;
 		}
+		var password = user_data.password;
+		var sha512 = crypto.createHash('sha512');
+		sha512.update(password);
+		var hashed_password = sha512.digest('hex');
+		user_data["hashed_password"] = hashed_password;
+		mongo.create_user(user_data, function(err, obj){
+			if(err){
+				res.json({result:false, message:"saving data failed"});
+			}else{
+				res.json({result:true, message:"user data has been registered successfully"});
+			}
+		})
 	})
-
 });
 
 
