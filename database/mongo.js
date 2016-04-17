@@ -8,7 +8,6 @@ mongoose.connection.on('open', function(){
 
 
 
-
 var User = new  mongoose.Schema({
 	first_name: {type:String, required:true},
 	last_name: {type:String, required:true},
@@ -29,10 +28,7 @@ var retrieve_user_all = function(callback){
 };
 
 
-
-
 module.exports = {
 	create_user: create_user,
 	retrieve_user_all: retrieve_user_all
 }
-

@@ -68,29 +68,4 @@ router.get('/show_all_users', function(req, res){
 
 
 
-
-router.get('/db_insert_sample', function (req, res) {
-
-    var sampleCollection = 'chapters';
-	var chapters = [{
-	    'Title': 'Snow Crash',
-	    'Author': 'Neal Stephenson'
-	},{
-	    'Title': 'Snow Crash',
-	    'Author': 'Neal Stephenson'
-	}];
-
-	mongo.insert(sampleCollection, chapters, function(error, result){
-		console.log("call back called");
-		console.log(result);
-		if(error){
-			res.send(error);
-		}else{
-			res.send(result.result);
-		}
-	} );
-});
-
-
-
 module.exports = router;
