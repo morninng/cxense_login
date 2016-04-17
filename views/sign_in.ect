@@ -1,11 +1,55 @@
 <html>
-<head></head>
+<head>
+	
+	<script   src="https://code.jquery.com/jquery-2.2.3.js"   integrity="sha256-laXWtGydpwqJ8JA+X9x2miwmaiKhn8tVmOVEigRNtP4="   crossorigin="anonymous"></script>
+
+</head>
 <body>
 
 login e-mail
-<input type="text" placeholder="email">
-<input type="password">
-<input type="button" value="send">
+<form name="login_form">
+	<div>
+		e-mail: <input type="text" name="email" placeholder="email">
+	</div>
+	<div>
+		password: <input type="password" name="password">
+	</div>
+	<div>
+		<input type="button" value="send" onClick="send_user_data()">
+	</div>
+</form>
+
+<script>
+
+var send_user_data = function(){
+	var mail_address = document.login_form.email.value;
+	var password_str = document.login_form.password.value;
+	var user_data = {
+		email:mail_address,
+		password: password_str
+	}
+	var dest_url = "http://localhost:3000/create_user";
+
+	$.post(dest_url, user_data)
+		.done(function(res_data){
+			console.log(res_data);
+			result = res_data.result;
+			if(result == true){
+				console.log(res_data.message);
+			}else{
+				console.log(res_data.message);
+			}
+
+		})
+
+
+
+
+}
+
+
+</script>
+
 
 </body>
 </html>

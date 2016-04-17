@@ -9,8 +9,10 @@ mongoose.connection.on('open', function(){
 
 
 var User = new  mongoose.Schema({
-	first_name: {type:String, required:true},
-	last_name: {type:String, required:true},
+	email: {type:String, required:true},
+	hashed_password: {type:String, required:true},
+	first_name: {type:String },
+	last_name: {type:String },
 	date_created:{type:Date, default:Date.now},
 	age:{type:Number}
 });
@@ -18,9 +20,16 @@ var UserModel = mongoose.model('User', User);
 
 
 
-var create_user = function(FirstName, LastName, age_num, callback){
-	var newUser = new UserModel({'first_name':FirstName,'last_name':LastName,'age':age_num});
+var create_user = function(user_data, callback){
+
+	var newUser = new UserModel();
+	newUser["email"] = user_data.email || null;
+	newUser["hashed_password"] = user_data.hashed_password || null;
+	newUser["first_name"] = user_data.first_name || null;
+	newUser["last_name"] = user_data.last_name || null;
+	newUser["age"] = user_data.age || null;
 	newUser.save(callback);
+
 };
 
 var retrieve_user_all = function(callback){

@@ -1,4 +1,5 @@
 var express = require('express');
+var crypto = require("crypto");
 var router = express.Router();
 
 var mongo = require( './../database/mongo' );
@@ -37,16 +38,29 @@ router.get('/test', function (req, res, next) {
 });
 
 
-router.get('/create_user', function(req, res){
 
-	mongo.create_user("Yuta", "Moriyama", 18, function(err, obj){
+router.post('/create_user', function(req, res){
+	var user_data = req.body;
+	var password = user_data.password;
+
+	var sha512 = crypto.createHash('sha512');
+	sha512.update(password);
+	var hashed_password = sha512.digest('hex');
+
+	user_data["hashed_password"] = hashed_password;
+
+
+	mongo.create_user(user_data, function(err, obj){
 		if(err){
-			res.send(err);
+			res.json({result:false, message:"saving data failed"});
 		}else{
-			res.send(obj);
+			res.json({result:true, message:"user data has been registered successfully"});
 		}
 	})
+
 });
+
+
 
 router.get('/show_all_users', function(req, res){
 	console.log("show_all_users");
