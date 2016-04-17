@@ -7,4 +7,5 @@ use XXXX
 show collections
 db.YYYY.find()
 
+db.YYY.drop()
 
