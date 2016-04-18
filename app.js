@@ -5,10 +5,33 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var session = require('express-session');
+var MongoDBStore = require('connect-mongodb-session')(session);
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var ECT = require('ect');
 var app = express();
+
+
+  var store = new MongoDBStore({ 
+    uri: 'mongodb://localhost:27017/cxense',
+    collection: 'Sessions'
+  });
+  store.on('error', function(error) {
+    assert.ifError(error);
+    assert.ok(false);
+  });
+
+  app.use(require('express-session')({
+    secret: 'morninng',
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week 
+    },
+    store: store
+  }));
+
+
 
 // view engine setup
 //app.set('views', path.join(__dirname, 'views'));

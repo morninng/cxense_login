@@ -56,6 +56,7 @@ router.post('/create_user', function(req, res){
 			if(err){
 				res.json({result:false, message:"saving data failed"});
 			}else{
+				req.session.user = email_address;
 				res.json({result:true, message:"user data has been registered successfully"});
 			}
 		})
