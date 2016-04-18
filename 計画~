@@ -19,7 +19,9 @@
  　　→SessionIDがCookieに付与されていたら、Sessionに名前があるかチェックし、あったら名前を表示
  　→なかったら、Loginへのリンクを表示
  Logout
- 　→SessionIDをリフレッシュする。　　
+ 　→SessionIDをリフレッシュする。
+ 
+ 　　
  　
  
 　

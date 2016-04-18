@@ -20,9 +20,6 @@ router.get('/ect_test', function(req, res, next) {
   res.render('test', { text: 'ect' });
 });
 
-router.get('/sign_in', function(req, res, next) {
-  res.render('sign_in');
-});
 
 
 router.get('/hello', function (req, res) {
@@ -39,11 +36,16 @@ router.get('/test', function (req, res, next) {
 
 
 
-router.post('/create_user', function(req, res){
+router.get('/sign_in', function(req, res, next) {
+  res.render('sign_in');
+});
+
+
+router.post('/sign_in', function(req, res){
 	var user_data = req.body;
 	var email_address = user_data.email;
-	mongo.check_user_existence(email_address, function(err, users){
-		if(users.length > 0){
+	mongo.check_user_existence(email_address, function(err, user){
+		if(user){
 			res.json({result:false, message:"the email address is already registered"});
 			return;
 		}
@@ -56,13 +58,47 @@ router.post('/create_user', function(req, res){
 			if(err){
 				res.json({result:false, message:"saving data failed"});
 			}else{
-				req.session.user = email_address;
+				req.session.user = new Object();
+				req.session.user.first_name = user_data["first_name"];
+				req.session.user.last_name = user_data["last_name"];
+				//var cookie_value = JSON.stringify(req.session.user);
+				//res.cookie("user_data", cookie_value, { maxAge: 900000, httpOnly: true });
 				res.json({result:true, message:"user data has been registered successfully"});
 			}
 		})
 	})
 });
 
+router.get('/login', function(req, res, next) {
+  res.render('login');
+});
+
+router.post('/log_in', function(req, res){
+	var user_data = req.body;
+	var email_address = user_data.email;
+	mongo.check_user_existence(email_address, function(err, user){
+		if(!user){
+			res.json({result:false, message:"no user is registered by this e-mail"});
+			return;
+		}else{
+			var stored_hashed_password = user["hashed_password"]
+
+			var input_password = user_data["password"];
+			var sha512 = crypto.createHash('sha512');
+			sha512.update(input_password);
+			var input_hashed_password = sha512.digest('hex');
+
+			if(stored_hashed_password == input_hashed_password){
+				res.json({result:true, message:"login succeed"});
+				req.session.user = new Object();
+				req.session.user.first_name = user["first_name"];
+				req.session.user.last_name = user["last_name"];
+			}else{
+				res.json({result:false, message:"password and e-mail does not match"});
+			}
+		}
+	})
+});
 
 
 router.get('/show_all_users', function(req, res){

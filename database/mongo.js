@@ -37,7 +37,7 @@ var retrieve_user_all = function(callback){
 };
 
 var check_user_existence = function(email_address, callback){
-	UserModel.find({email: email_address},callback);
+	UserModel.findOne({email: email_address},callback);
 }
 
 module.exports = {

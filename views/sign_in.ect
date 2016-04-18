@@ -6,13 +6,22 @@
 </head>
 <body>
 
-login e-mail
+user registration information
 <form name="login_form">
 	<div>
 		e-mail: <input type="text" name="email" placeholder="email">
 	</div>
 	<div>
 		password: <input type="password" name="password">
+	</div>
+	<div>
+		first name: <input type="text" name="first_name" placeholder="first name">
+	</div>
+	<div>
+		last name: <input type="text" name="last_name" placeholder="last name">
+	</div>
+	<div>
+		age: <input type="number" name="age">
 	</div>
 	<div>
 		<input type="button" value="send" onClick="send_user_data()">
@@ -24,11 +33,17 @@ login e-mail
 var send_user_data = function(){
 	var mail_address = document.login_form.email.value;
 	var password_str = document.login_form.password.value;
+	var first_name_str = document.login_form.first_name.value;
+	var last_name_str = document.login_form.last_name.value;
+	var age_str = document.login_form.age.value;
 	var user_data = {
 		email:mail_address,
-		password: password_str
+		password: password_str,
+		first_name: first_name_str,
+		last_name: last_name_str,
+		age: age_str
 	}
-	var dest_url = "http://localhost:3000/create_user";
+	var dest_url = "http://localhost:3000/sign_in";
 
 	$.post(dest_url, user_data)
 		.done(function(res_data){
@@ -36,15 +51,14 @@ var send_user_data = function(){
 			result = res_data.result;
 			if(result == true){
 				console.log(res_data.message);
+				alert(res_data.message);
+				location.href = "/";
 			}else{
 				console.log(res_data.message);
+				alert(res_data.message);
 			}
 
 		})
-
-
-
-
 }
 
 
