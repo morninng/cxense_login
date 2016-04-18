@@ -6,7 +6,7 @@ var send_user_data_login = function(){
 		email:mail_address,
 		password: password_str
 	}
-	var dest_url = "http://localhost:3000/log_in";
+	var dest_url = "http://localhost:3000/users/log_in";
 
 	$.post(dest_url, user_data)
 		.done(function(res_data){
@@ -36,7 +36,7 @@ var send_user_data_signin = function(){
 		last_name: last_name_str,
 		age: age_str
 	}
-	var dest_url = "http://localhost:3000/sign_in";
+	var dest_url = "http://localhost:3000/users/sign_in";
 
 	$.post(dest_url, user_data)
 		.done(function(res_data){
@@ -55,7 +55,7 @@ var send_user_data_signin = function(){
 
 var logout = function(){
 
-	var dest_url = "http://localhost:3000/logout";
+	var dest_url = "http://localhost:3000/users/logout";
 	$.get(dest_url)
 		.done(function(res_data){
 			location.reload();
