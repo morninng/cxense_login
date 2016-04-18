@@ -11,7 +11,9 @@ router.get('/', function(req, res, next) {
 
 
 router.get('/sign_in', function(req, res, next) {
-  res.render('sign_in');
+  var header_obj = mongo.get_user_status(req.session);
+  
+  res.render('sign_in', {header: header_obj});
 });
 
 
@@ -41,8 +43,12 @@ router.post('/sign_in', function(req, res){
 	})
 });
 
+
+
 router.get('/login', function(req, res, next) {
-  res.render('login');
+  var header_obj = mongo.get_user_status(req.session);
+
+  res.render('login', {header: header_obj});
 });
 
 router.post('/log_in', function(req, res){
@@ -93,9 +99,6 @@ router.get('/show_all_users', function(req, res){
 		}
 	});
 });
-
-
-
 
 
 module.exports = router;

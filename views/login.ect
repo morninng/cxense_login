@@ -1,25 +1,18 @@
-<html>
-<head>
-	<script type="text/javascript" src="/javascripts/user.js"></script>
-	<script   src="https://code.jquery.com/jquery-2.2.3.js"   integrity="sha256-laXWtGydpwqJ8JA+X9x2miwmaiKhn8tVmOVEigRNtP4="   crossorigin="anonymous"></script>
+<% extend 'layout.ect' %>
 
-</head>
-<body>
-
-user registration information
-<form name="login_form">
-	<div>
-		e-mail: <input type="text" name="email" placeholder="email">
-	</div>
-	<div>
-		password: <input type="password" name="password">
-	</div>
-	<div>
-		<input type="button" value="send" onClick="send_user_data_login()">
-	</div>
-</form>
+<div>
+	user registration information
+	<form name="login_form">
+		<div>
+			e-mail: <input type="text" name="email" placeholder="email">
+		</div>
+		<div>
+			password: <input type="password" name="password">
+		</div>
+		<div>
+			<input type="button" value="send" onClick="send_user_data_login()">
+		</div>
+	</form>
+</div>
 
 
-
-</body>
-</html>
