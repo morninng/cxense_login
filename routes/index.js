@@ -2,7 +2,7 @@ var express = require('express');
 var crypto = require("crypto");
 var router = express.Router();
 
-var mongo = require( './../database/mongo' );
+var mongo = require( './../src/mongo' );
 
 
 router.use(function timeLog(req, res, next) {

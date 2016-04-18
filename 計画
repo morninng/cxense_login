@@ -19,7 +19,14 @@
  　　→SessionIDがCookieに付与されていたら、Sessionに名前があるかチェックし、あったら名前を表示
  　→なかったら、Loginへのリンクを表示
  Logout
- 　→SessionIDをリフレッシュする。
+ 　→SessionIDはそのままで、そこに付与されているuserdataを削除
+
+
+TemplateEngineの利用を整理し、
+Routerの利用法などを整理。
+userモジュールで分けて管理
+
+
  
  　　
  　
