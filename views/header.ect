@@ -1,0 +1,16 @@
+<div class="header_container">
+	<script type="text/javascript" src="/javascripts/user.js"></script>
+
+	<div class="header_right">
+		<% if @header.user : %>
+			<span class="user_name"> <%- @header.name %></span>
+			<input type="button" value="logout" onClick="logout()">
+		<% end %>
+
+		<% if @header.login : %>
+			<input type="button" value="sign in" onClick="location.href='/sign_in'">
+			<input type="button" value="log in" onClick="location.href='/login'">
+		<% end %>
+
+	</div>
+</div>

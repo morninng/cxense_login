@@ -1,4 +1,4 @@
-body {
+.main_container {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
@@ -6,3 +6,18 @@ body {
 a {
   color: #00B7FF;
 }
+
+.header_container{
+	margin-left:auto;
+	margin-right:auto;
+	max-width: 1280px;
+}
+.header_container .header_right{
+	width:35%;
+	float: right;
+}
+.header_container .header_left{
+	width:65%;
+	float: left;
+}
+

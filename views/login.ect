@@ -1,6 +1,6 @@
 <html>
 <head>
-	
+	<script type="text/javascript" src="/javascripts/user.js"></script>
 	<script   src="https://code.jquery.com/jquery-2.2.3.js"   integrity="sha256-laXWtGydpwqJ8JA+X9x2miwmaiKhn8tVmOVEigRNtP4="   crossorigin="anonymous"></script>
 
 </head>
@@ -15,43 +15,10 @@ user registration information
 		password: <input type="password" name="password">
 	</div>
 	<div>
-		<input type="button" value="send" onClick="send_user_data()">
+		<input type="button" value="send" onClick="send_user_data_login()">
 	</div>
 </form>
 
-<script>
-
-var send_user_data = function(){
-	var mail_address = document.login_form.email.value;
-	var password_str = document.login_form.password.value;
-	var user_data = {
-		email:mail_address,
-		password: password_str
-	}
-	var dest_url = "http://localhost:3000/log_in";
-
-	$.post(dest_url, user_data)
-		.done(function(res_data){
-			console.log(res_data);
-			result = res_data.result;
-			if(result == true){
-				console.log(res_data.message);
-				alert("login succeeded");
-				location.href = "/";
-			}else{
-				console.log(res_data.message);
-				alert(res_data.message);
-			}
-
-		})
-
-
-
-
-}
-
-
-</script>
 
 
 </body>

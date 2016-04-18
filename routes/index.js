@@ -13,7 +13,11 @@ router.use(function timeLog(req, res, next) {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+	var header_obj = mongo.get_user_status(req.session);
+
+
+
+  res.render('index', { title: 'Express', header: header_obj});
 });
 
 router.get('/ect_test', function(req, res, next) {
@@ -89,10 +93,10 @@ router.post('/log_in', function(req, res){
 			var input_hashed_password = sha512.digest('hex');
 
 			if(stored_hashed_password == input_hashed_password){
-				res.json({result:true, message:"login succeed"});
 				req.session.user = new Object();
 				req.session.user.first_name = user["first_name"];
 				req.session.user.last_name = user["last_name"];
+				res.json({result:true, message:"login succeed"});
 			}else{
 				res.json({result:false, message:"password and e-mail does not match"});
 			}
@@ -100,6 +104,11 @@ router.post('/log_in', function(req, res){
 	})
 });
 
+router.get('/logout', function(req, res){
+
+	req.session.user = null;
+	res.send();
+});
 
 router.get('/show_all_users', function(req, res){
 	console.log("show_all_users");
