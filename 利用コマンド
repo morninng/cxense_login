@@ -9,3 +9,13 @@ db.YYYY.find()
 
 db.YYY.drop()
 
+
+
+
+sudo ssh -i /home/morninng/dac/cxense-aws-key.pem ubuntu@ec2-54-209-201-218.compute-1.amazonaws.com
+
+
+sudo rsync -avz -e "ssh -i /home/morninng/dac/cxense-aws-key.pem" --exclude='node_modules/*' /home/morninng/dac/development/cxense_demo/login_app ubuntu@ec2-54-209-201-218.compute-1.amazonaws.com:/home/ubuntu/source
+
+Security group should be set for web server
+

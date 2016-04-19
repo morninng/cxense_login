@@ -24,8 +24,17 @@
 
 TemplateEngineの利用を整理し、
 Routerの利用法などを整理。
+userモジュールで分けて管理
 
 
+4月19日
+ ユーザのIDを、CXENSEのタグに渡す。
+ Amazonへのデータ送付
+ DynamoDBへの移管
+  →セッションはhttps://github.com/ca98am79/connect-dynamodb
+  　こちらを用いる。
+ 
+ 
  
  　　
  　
