@@ -1,10 +1,10 @@
-４月１６日
+■４月１６日
 　基本的な、ExpressからMongodbにアクセスする部分の作成完了
 　
-4月１７日
+■4月１７日
 　ユーザが情報を送って、パスワードをHashをかけた値で認証可能にする。
 
-4月18日
+■4月18日
 　Login
 　Signin
  ヘッダバー
@@ -27,17 +27,46 @@ Routerの利用法などを整理。
 userモジュールで分けて管理
 
 
-4月19日
- ユーザのIDを、CXENSEのタグに渡す。
+■4月19日
  Amazonへのデータ送付
- DynamoDBへの移管
+  →Rsyncでの同期
+DynamoDBへの移管
   →セッションはhttps://github.com/ca98am79/connect-dynamodb
   　こちらを用いる。
+ →チュートリアル実行
  
+  　
+  　
+ ユーザのIDを、CXENSEのタグに渡す。
+　　　http://docs.aws.amazon.com/ja_jp/amazondynamodb/latest/gettingstartedguide/Welcome.html
+dynamodbの利用方法
+
+　　　http://docs.aws.amazon.com/ja_jp/amazondynamodb/latest/developerguide/Introduction.html
+　　　チュートリアル
+　　　　　　http://docs.aws.amazon.com/ja_jp/amazondynamodb/latest/gettingstartedguide/GettingStarted.JsShell.html
+ここも役に立ちそう
+  http://shop.oreilly.com/product/9781783551958.do
+  http://shop.oreilly.com/product/9781783551897.do
+    
+
+Dynamodbの練習コマンド
+
+cd ~/Desktop/SoftwareDownload/dynamodb_local_2016-03-01/
+
+java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb
  
- 
- 　　
+ 　　http://localhost:8000/shell
+ 　　 →でみる。
  　
- 
+ドキュメント 
+https://aws.amazon.com/jp/documentation/dynamodb/
+
+　NodeJS related samples
+http://docs.aws.amazon.com/ja_jp/amazondynamodb/latest/gettingstartedguide/GettingStarted.NodeJs.html
+
+cd /home/morninng/dac/development/cxense_demo/login_app/src/dynamo_sample/gettingStarated_nodejs
+
+■４月２２日
 　
-　
+
+

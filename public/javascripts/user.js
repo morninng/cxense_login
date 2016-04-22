@@ -1,4 +1,5 @@
 
+
 var send_user_data_login = function(){
 	var mail_address = document.login_form.email.value;
 	var password_str = document.login_form.password.value;
@@ -63,6 +64,5 @@ var logout = function(){
 		.fail(function(error){
 			console.log(error);
 		})
-
 }
 
