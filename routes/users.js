@@ -1,7 +1,7 @@
 var express = require('express');
 var crypto = require("crypto");
 var router = express.Router();
-var mongo = require( './../src/mongo' );
+var model_user = require( './../src/model_user_mongo' );
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 
 
 router.get('/sign_in', function(req, res, next) {
-  var header_obj = mongo.get_user_status(req.session);
+  var header_obj = model_user.get_user_status(req.session);
   
   res.render('sign_in', {header: header_obj});
 });
@@ -20,7 +20,7 @@ router.get('/sign_in', function(req, res, next) {
 router.post('/sign_in', function(req, res){
 	var user_data = req.body;
 	var email_address = user_data.email;
-	mongo.check_user_existence(email_address, function(err, user){
+	model_user.check_user_existence(email_address, function(err, user){
 		if(user){
 			res.json({result:false, message:"the email address is already registered"});
 			return;
@@ -30,7 +30,7 @@ router.post('/sign_in', function(req, res){
 		sha512.update(password);
 		var hashed_password = sha512.digest('hex');
 		user_data["hashed_password"] = hashed_password;
-		mongo.create_user(user_data, function(err, obj){
+		model_user.create_user(user_data, function(err, obj){
 			if(err){
 				res.json({result:false, message:"saving data failed"});
 			}else{
@@ -46,7 +46,7 @@ router.post('/sign_in', function(req, res){
 
 
 router.get('/login', function(req, res, next) {
-  var header_obj = mongo.get_user_status(req.session);
+  var header_obj = model_user.get_user_status(req.session);
 
   res.render('login', {header: header_obj});
 });
@@ -54,7 +54,7 @@ router.get('/login', function(req, res, next) {
 router.post('/log_in', function(req, res){
 	var user_data = req.body;
 	var email_address = user_data.email;
-	mongo.check_user_existence(email_address, function(err, user){
+	model_user.check_user_existence(email_address, function(err, user){
 		if(!user){
 			res.json({result:false, message:"no user is registered by this e-mail"});
 			return;
@@ -86,7 +86,7 @@ router.get('/logout', function(req, res){
 
 router.get('/show_all_users', function(req, res){
 	console.log("show_all_users");
-	mongo.retrieve_user_all(function(err, users){
+	model_user.retrieve_user_all(function(err, users){
 		console.log(users);
 		if(err){
 			res.send(err);

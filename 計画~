@@ -67,6 +67,14 @@ http://docs.aws.amazon.com/ja_jp/amazondynamodb/latest/gettingstartedguide/Getti
 cd /home/morninng/dac/development/cxense_demo/login_app/src/dynamo_sample/gettingStarated_nodejs
 
 ■４月２２日
+
+ mongodbとdynamodbで、
+ Dynamodbにテーブル情報を登録する。
+ 
 　
+　
+
+
+
 
 

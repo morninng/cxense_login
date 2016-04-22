@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var mongo = require( './../src/mongo' );
+var model_user = require( './../src/model_user_mongo' );
 
 
 router.use(function timeLog(req, res, next) {
@@ -12,11 +12,10 @@ router.use(function timeLog(req, res, next) {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	var header_obj = mongo.get_user_status(req.session);
+	var header_obj = model_user.get_user_status(req.session);
 
-  res.render('index', { title: 'Express', header: header_obj});
+	res.render('index', { title: 'Express', header: header_obj});
 });
-
 
 
 
