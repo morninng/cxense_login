@@ -4,8 +4,8 @@ AWS.config.update({accessKeyId: config.AwsKeyId, secretAccessKey: config.SecretK
 
 
 AWS.config.update({
-  region: config.dynamo_url,
-  endpoint: config.dynamo_region
+  region: config.dynamo_region,
+  endpoint: config.dynamo_url
 });
 
 
