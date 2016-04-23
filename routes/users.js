@@ -1,14 +1,13 @@
 var express = require('express');
 var crypto = require("crypto");
 var router = express.Router();
-var model_user = require( './../src/model_user_mongo' );
+//var model_user = require( './../src/model_user_mongo' );
+var model_user = require( './../src/model_user_dynamo' );
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
-
-
 
 router.get('/sign_in', function(req, res, next) {
   var header_obj = model_user.get_user_status(req.session);
@@ -84,17 +83,19 @@ router.get('/logout', function(req, res){
 	res.send();
 });
 
+
 router.get('/show_all_users', function(req, res){
 	console.log("show_all_users");
-	model_user.retrieve_user_all(function(err, users){
-		console.log(users);
+	model_user.retrieve_user_all(function(err, user_array){
+		console.log(user_array);
 		if(err){
 			res.send(err);
 		}else{
+			/*
 			var user_array = new Array();
 			for(var i=0; i< users.length; i++){
 				user_array.push(users[i]._doc)
-			}
+			}*/
 			res.render('show_all_users', {'users': user_array});
 		}
 	});

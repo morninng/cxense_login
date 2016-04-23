@@ -43,7 +43,7 @@ dynamodb.listTables(params, function(err, data) {
 check table info
 
 var params = {
-    TableName: "Books"
+    TableName: "User"
 };
 dynamodb.describeTable(params, function(err, data) {
     if (err)
@@ -142,6 +142,23 @@ docClient.put(params, function(err, data) {
         console.log(JSON.stringify(data));
 });
 
+--
+var params = {
+    TableName: "Users",
+    Item: {
+        "email":"moriyama_yuuta@hotmail.com",
+        "first_name":"yuta",
+        "last_name":"moriyama",
+        "age":1,
+        "hashed_password":"lll"
+    }
+};
+docClient.put(params, function(err, data) {
+    if (err)
+        console.log(JSON.stringify(err));
+    else
+        console.log(JSON.stringify(data));
+});
 
 
 
@@ -268,3 +285,17 @@ docClient.scan(params, function(err, data) {
         console.log(JSON.stringify(data));
 });
 
+-- 
+Scan partial data
+
+
+ var params = {
+    TableName: "Users"
+};
+
+docClient.scan(params, function(err, data) {
+    if (err)
+        console.log(JSON.stringify(err));
+    else
+        console.log(JSON.stringify(data));
+});

@@ -70,8 +70,8 @@ cd /home/morninng/dac/development/cxense_demo/login_app/src/dynamo_sample/gettin
 
  mongodbとdynamodbでスイッチングできるようにモデルを作成
  Dynamodbにテーブル情報を登録する。
- 
-　
+
+
 　
 
 

@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-var model_user = require( './../src/model_user_mongo' );
+//var model_user = require( './../src/model_user_mongo' );
+var model_user = require( './../src/model_user_dynamo' );
 
 
 router.use(function timeLog(req, res, next) {
