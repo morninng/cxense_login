@@ -20,8 +20,8 @@ var DynamoDBStore = require('connect-dynamodb')({session: session});
 var AWS = require("aws-sdk");
 AWS.config.update({accessKeyId: config.AwsKeyId, secretAccessKey: config.SecretKey});
 AWS.config.update({
-  region: "us-west-2",
-  endpoint: "http://localhost:8000"
+  region: config.dynamo_url,
+  endpoint: config.dynamo_region
 });
  var aws_client = new AWS.DynamoDB();
  var store = new DynamoDBStore({client: aws_client});
