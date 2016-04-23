@@ -1,18 +1,8 @@
 
-var config = require('./cxense.conf');
-var AWS = require("aws-sdk");
-AWS.config.update({accessKeyId: config.AwsKeyId, secretAccessKey: config.SecretKey});
-
-
-AWS.config.update({
-  region: config.dynamo_url,
-  endpoint: config.dynamo_region
-});
-
-var docClient = new AWS.DynamoDB.DocumentClient();
 
  
-
+var dynamo = require('./dynamo');
+var docClient = dynamo.docClient;
 
 var create_user = function(user_data, callback){
 

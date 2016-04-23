@@ -15,15 +15,9 @@ var app = express();
 
 /* this part is for dynamodb session */
 
-var config = require('./src/cxense.conf');
+var dynamo = require('./src/dynamo');
+var aws_client = dynamo.aws_client;
 var DynamoDBStore = require('connect-dynamodb')({session: session});
-var AWS = require("aws-sdk");
-AWS.config.update({accessKeyId: config.AwsKeyId, secretAccessKey: config.SecretKey});
-AWS.config.update({
-  region: config.dynamo_url,
-  endpoint: config.dynamo_region
-});
- var aws_client = new AWS.DynamoDB();
  var store = new DynamoDBStore({client: aws_client});
 
 
