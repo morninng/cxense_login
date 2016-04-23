@@ -72,10 +72,16 @@ cd /home/morninng/dac/development/cxense_demo/login_app/src/dynamo_sample/gettin
  →session 以外のところはできた
  
 
-■４月２日
+■４月２３日
  Dynamodbにテーブル情報を登録する。
+ 
+ 
+  git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch PATH-TO-YOUR-FILE-WITH-SENSITIVE-DATA' \
+ 
+ 
+ git filter-branch --tree-filter 'rm -f src/cxense.conf' HEAD
 
-
+bfg --delete-files src/cxense.conf'
 　
 
 

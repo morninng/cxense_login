@@ -11,7 +11,7 @@ AWS.config.update({
 
 var docClient = new AWS.DynamoDB.DocumentClient();
 
-
+ 
 
 
 var create_user = function(user_data, callback){
