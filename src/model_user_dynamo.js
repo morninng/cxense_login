@@ -58,19 +58,17 @@ var check_user_existence = function(email_address, callback){
 var get_user_status = function(session){
 
 	var header_obj = new Object();
-	/*
+	
 	if(session.user){
 		header_obj.user = true;
 		header_obj.name = session.user.first_name + " - " + session.user.last_name;
 		header_obj.login = false;
 
 	}else{
-		*/
 		header_obj.user = false;
 		header_obj.name = null;
 		header_obj.login = true;
-		/*
-	}*/
+	}
 	return header_obj;
 
 }

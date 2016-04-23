@@ -43,7 +43,7 @@ dynamodb.listTables(params, function(err, data) {
 check table info
 
 var params = {
-    TableName: "User"
+    TableName: "sessions"
 };
 dynamodb.describeTable(params, function(err, data) {
     if (err)
@@ -290,7 +290,7 @@ Scan partial data
 
 
  var params = {
-    TableName: "Users"
+    TableName: "sessions"
 };
 
 docClient.scan(params, function(err, data) {

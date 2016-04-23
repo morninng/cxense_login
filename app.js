@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var session = require('express-session');
-var MongoDBStore = require('connect-mongodb-session')(session);
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -14,10 +13,33 @@ var ECT = require('ect');
 var app = express();
 
 
+/* this part is for dynamodb session */
+
+var config = require('./src/cxense.conf');
+var DynamoDBStore = require('connect-dynamodb')({session: session});
+var AWS = require("aws-sdk");
+AWS.config.update({accessKeyId: config.AwsKeyId, secretAccessKey: config.SecretKey});
+AWS.config.update({
+  region: "us-west-2",
+  endpoint: "http://localhost:8000"
+});
+ var aws_client = new AWS.DynamoDB();
+ var store = new DynamoDBStore({client: aws_client});
+
+
+/*************/
+
+/* this part is for mongodb session */
+/*
+  var MongoDBStore = require('connect-mongodb-session')(session);
   var store = new MongoDBStore({ 
     uri: 'mongodb://localhost:27017/cxense',
     collection: 'Sessions'
   });
+  */
+  /******/
+
+
   store.on('error', function(error) {
     assert.ifError(error);
     assert.ok(false);
