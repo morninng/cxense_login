@@ -299,3 +299,29 @@ docClient.scan(params, function(err, data) {
     else
         console.log(JSON.stringify(data));
 });
+
+-------------delete table---------
+
+var params = {
+    TableName: "Movies"
+};
+
+dynamodb.deleteTable(params, function(err, data) {
+    if (err)
+        console.log(JSON.stringify(err, null, 2));
+    else
+        console.log(JSON.stringify(data, null, 2));
+});
+
+--
+var params = {
+    TableName: "sessions"
+};
+
+dynamodb.deleteTable(params, function(err, data) {
+    if (err)
+        console.log(JSON.stringify(err, null, 2));
+    else
+        console.log(JSON.stringify(data, null, 2));
+});
+

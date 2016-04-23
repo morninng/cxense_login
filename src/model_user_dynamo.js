@@ -50,7 +50,15 @@ var check_user_existence = function(email_address, callback){
 			"email": email_address
 		}
 	};
-	docClient.get(params, function(err, data){callback(err, data.Item)});
+	docClient.get(params, 
+		function(err, data){
+			if(data){
+				callback(err, data.Item);
+			}else{
+				callback(err, null);
+			}
+		}
+	);
 
 
 }

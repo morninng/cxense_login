@@ -54,7 +54,10 @@ router.post('/log_in', function(req, res){
 	var user_data = req.body;
 	var email_address = user_data.email;
 	model_user.check_user_existence(email_address, function(err, user){
-		if(!user){
+		if(err){
+			res.json({result:false, message:"database access error"});
+			return;
+		} else if(!user){
 			res.json({result:false, message:"no user is registered by this e-mail"});
 			return;
 		}else{
