@@ -76,7 +76,7 @@ cd /home/morninng/dac/development/cxense_demo/login_app/src/dynamo_sample/gettin
  Dynamodbにテーブル情報を登録する。
  
  
-  git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch src/cxense.conf' \
+  git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch src/cxense.conf' 
  
  
  git filter-branch --tree-filter 'rm -f src/cxense.conf' HEAD

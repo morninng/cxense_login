@@ -1,7 +1,11 @@
-var config = require('./cxense.conf');
+//var config = require('./config_local.conf');
+var config = require('./config_aws.conf');
 var AWS = require("aws-sdk");
-AWS.config.update({accessKeyId: config.AwsKeyId, secretAccessKey: config.SecretKey});
 
+
+if(config.local){
+	AWS.config.update({accessKeyId: config.AwsKeyId, secretAccessKey: config.SecretKey});
+}
 
 AWS.config.update({
   region: config.dynamo_region,

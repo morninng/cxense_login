@@ -13,6 +13,7 @@ router.use(function timeLog(req, res, next) {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+	console.log("access to /");
 	var header_obj = model_user.get_user_status(req.session);
 
 	res.render('index', { title: 'Express', header: header_obj});

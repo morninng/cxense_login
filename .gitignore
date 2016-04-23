@@ -1,3 +1,5 @@
 /node_modules
 /src/dynamo_sample/gettingStarated_nodejs/cxense.conf
-/src/cxense.conf
+/src/config_aws.conf
+/src/config_local.conf
+*~
