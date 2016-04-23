@@ -1,5 +1,5 @@
-//var config = require('./config_local.conf');
-var config = require('./config_aws.conf');
+var config = require('./config_local.conf');
+//var config = require('./config_aws.conf');
 var AWS = require("aws-sdk");
 
 
