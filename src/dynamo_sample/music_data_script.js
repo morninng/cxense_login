@@ -275,7 +275,7 @@ docClient.query(params, function(err, data) {
  Scan all the data
 
  var params = {
-    TableName: "Books"
+    TableName: "User"
 };
 
 docClient.scan(params, function(err, data) {
@@ -315,7 +315,7 @@ dynamodb.deleteTable(params, function(err, data) {
 
 --
 var params = {
-    TableName: "sessions"
+    TableName: "User"
 };
 
 dynamodb.deleteTable(params, function(err, data) {

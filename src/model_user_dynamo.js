@@ -13,7 +13,8 @@ var create_user = function(user_data, callback){
 	        "first_name": user_data.first_name || null,
 	        "last_name": user_data.last_name || null,
 	        "age": user_data.age || null,
-	        "hashed_password": user_data.hashed_password || null
+	        "hashed_password": user_data.hashed_password || null,
+	        "tuuid": user_data.tuuid || null
 	    }
 	};
 	console.log("Adding a new item...");

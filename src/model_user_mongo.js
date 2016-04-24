@@ -15,6 +15,7 @@ var User = new  mongoose.Schema({
 	last_name: {type:String },
 	date_created:{type:Date, default:Date.now},
 	age:{type:Number}
+	tuuid:{type:String}
 });
 var UserModel = mongoose.model('User', User);
 
@@ -28,6 +29,7 @@ var create_user = function(user_data, callback){
 	newUser["first_name"] = user_data.first_name || null;
 	newUser["last_name"] = user_data.last_name || null;
 	newUser["age"] = user_data.age || null;
+	newUser["tuuid"] = user_data.tuuid || null
 	newUser.save(callback);
 
 };

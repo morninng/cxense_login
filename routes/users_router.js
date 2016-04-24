@@ -29,6 +29,7 @@ router.post('/sign_in', function(req, res){
 		sha512.update(password);
 		var hashed_password = sha512.digest('hex');
 		user_data["hashed_password"] = hashed_password;
+		user_data["tuuid"] = req.cookies.tuuid;
 		model_user.create_user(user_data, function(err, obj){
 			if(err){
 				res.json({result:false, message:"saving data failed"});
@@ -72,6 +73,8 @@ router.post('/log_in', function(req, res){
 				req.session.user = new Object();
 				req.session.user.first_name = user["first_name"];
 				req.session.user.last_name = user["last_name"];
+				var tuuid = user["tuuid"];
+				res.cookie('tuuid', tuuid, {maxAge:60000, httpOnly:false});	
 				res.json({result:true, message:"login succeed"});
 			}else{
 				res.json({result:false, message:"password and e-mail does not match"});
