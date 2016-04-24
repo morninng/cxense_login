@@ -74,14 +74,24 @@ cd /home/morninng/dac/development/cxense_demo/login_app/src/dynamo_sample/gettin
 
 ■４月２３日
  Dynamodbにテーブル情報を登録する。
- 
- 
-  git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch src/cxense.conf' 
- 
- 
- git filter-branch --tree-filter 'rm -f src/cxense.conf' HEAD
 
-bfg --delete-files src/cxense.conf'
+■4月24日Cookieへの データ設定をtuuidモジュールへ分離する。
+　→MiddleWareをどう呼び出せるのかをチェック
+
+＜連携実装＞
+　SignInしたときのTUUIDをユーザにひもづけるTUUIDとして設定
+ ログインしたときに、Cookieを書き換える。
+ CXENSEへのIDの受け渡しは、ローカルのJavascriptで実行
+
+　show user all画面を表示されたときにカウントアップするデータを作成する。
+　　→カウントアップデータを監視し、Lambaでユーザデータの取得をする実装を行う。
+　　　→はじめはEC2で実装したあとに移行したほうがよい
+
+ 
+
+　
+
+
 　
 
 

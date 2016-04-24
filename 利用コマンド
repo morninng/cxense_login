@@ -28,3 +28,7 @@ cd ~/Desktop/SoftwareDownload/dynamodb_local_2016-03-01/
 java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb
  
  　　http://localhost:8000/shell
+
+
+ 
+ git filter-branch --tree-filter 'rm -f src/cxense.conf' HEAD

@@ -62,6 +62,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+var tuuid = require('./src/tuuid.js');
+app.use(tuuid.set_tuuid);
+
 app.use('/', routes);
 app.use('/users', users);
 
