@@ -1,0 +1,40 @@
+ 
+ 
+■4月２６日
+　
+https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/intro-core-components.html
+
+　IAMユーザのAliasでのログインのところを作ってみる。
+　IAMの演習でリソースに権限を付与というものを確認する。
+
+
+グループのリストアップ
+aws iam list-groups
+
+ポリシーの設定
+aws iam attach-group-policy --group-name Administrator --policy-arn arn:aws:iam::aws:policy/AdministratorAccess
+
+
+
+http://docs.aws.amazon.com/ja_jp/amazondynamodb/latest/developerguide/UsingIAMWithDDB.html
+
+ Dynamodbのarnの設定
+　　arn:aws:dynamodb:region:account-id:table/table-name
+　　arn:aws:dynamodb:us-east-1:494806557253:table/PV_COUNT
+　　arn:aws:dynamodb:us-east-1:494806557253:table/PV_COUNT
+　　
+■５月１日
+
+　(1)apiとして、CXENSE_apiを作成する。
+　 →リソースで、userinfo_updateを作成する。
+　 　→GetではHelloWorldを実行
+　 　→PostではLambdaのcxense_userinro_updateを実行することにする。
+　 　
+　(2)lambdaで、cxense_user_authを作成する。
+　　→dynamodbにて、userのデータを取得して認証する。
+
+　(3)lambdaにて、cxense_userinro_updateを作成する。
+　　　→userdataを取得して、CXENSEコマンドをなげる。
+　　　→CXENSEコマンドの実行結果を、Dynamodbに格納
+
+

@@ -25,6 +25,29 @@ dynamodb.createTable(params, function(err, data) {
     else
         console.log(JSON.stringify(data));
 });
+
+
+ var params = {
+    TableName : "PV_COUNT",
+    KeySchema: [       
+        { AttributeName: "pv_distinguish", KeyType: "HASH" }
+    ],
+    AttributeDefinitions: [       
+        { AttributeName: "pv_distinguish", AttributeType: "S" }
+    ],
+    ProvisionedThroughput: {       
+        ReadCapacityUnits: 1, 
+        WriteCapacityUnits: 1
+    }
+};
+dynamodb.createTable(params, function(err, data) {
+    if (err)
+        console.log(JSON.stringify(err));
+    else
+        console.log(JSON.stringify(data));
+});
+
+
 -------------------
 check table existence with list
 
@@ -72,6 +95,24 @@ docClient.put(params, function(err, data) {
     else
         console.log(JSON.stringify(data));
 });
+
+
+var params = {
+    TableName: "PV_COUNT",
+    Item: {
+        "pv_distinguish":"XXXXXXX",
+        "pv_count":0
+    },
+    "ConditionExpression": "attribute_not_exists(email)"
+};
+docClient.put(params, function(err, data) {
+    if (err)
+        console.log(JSON.stringify(err));
+    else
+        console.log(JSON.stringify(data));
+});
+
+
 
 -------------------------
 read the data from email address

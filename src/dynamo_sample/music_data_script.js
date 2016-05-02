@@ -21,6 +21,7 @@
         WriteCapacityUnits: 1
     }
 };
+
 dynamodb.createTable(params, function(err, data) {
     if (err)
         console.log(JSON.stringify(err));
@@ -275,7 +276,7 @@ docClient.query(params, function(err, data) {
  Scan all the data
 
  var params = {
-    TableName: "User"
+    TableName: "sessions"
 };
 
 docClient.scan(params, function(err, data) {
@@ -290,7 +291,7 @@ Scan partial data
 
 
  var params = {
-    TableName: "sessions"
+    TableName: "PV_COUNT"
 };
 
 docClient.scan(params, function(err, data) {
@@ -315,7 +316,7 @@ dynamodb.deleteTable(params, function(err, data) {
 
 --
 var params = {
-    TableName: "User"
+    TableName: "PV_COUNT"
 };
 
 dynamodb.deleteTable(params, function(err, data) {

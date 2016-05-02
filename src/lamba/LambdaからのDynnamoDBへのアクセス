@@ -1,0 +1,36 @@
+■■DynamoDBからLambda関数の呼び出し■■
+ 
+ ■Lambda呼び出しのTrigger
+ 
+ https://docs.aws.amazon.com/ja_jp/amazondynamodb/latest/developerguide/Streams.Lambda.Walkthrough.Step2.html
+  これを参考にすること。
+  他のドキュメントにおいて、console を用いた方法などなどが紹介されているが、
+  動かない場合がおおい。これだとUIの設定のみでDynamoDBからLambdaの呼び出しができる。
+ 
+　■レコードの更新情報へのアクセス
+
+　　これは、新規でレコードが作成されたときに、レコードにアクセスする方法
+　　updateなど様々なアクションによりアクセス方法が違うと思われるので要調査
+
+　　exports.handler = (event, context, callback) => {
+    event.Records.forEach((record) => {
+	var new_image = record.dynamodb.NewImage;
+	var first_name = new_image.first_name;
+	
+    });
+    callback(null, `Successfully processed ${event.Records.length} records.`);
+　　};
+
+
+	 
+ 
+ 
+ 
+ 
+■■Lambda関数からのDynamoDBの更新■■
+
+　
+ 
+
+
+

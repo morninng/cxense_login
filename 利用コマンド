@@ -24,7 +24,8 @@ sudo rsync -avz -e "ssh -i /home/morninng/dac/cxense-aws-key.pem" --exclude='nod
 
 
 
- 
+■ローカルでのDynamoDBの起動
+
 cd ~/Desktop/SoftwareDownload/dynamodb_local_2016-03-01/
 
 java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb
@@ -38,3 +39,7 @@ java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb
 
 node bin/www
  http://52.201.227.98:3000/
+ 
+ 
+ 
+

@@ -83,9 +83,132 @@ cd /home/morninng/dac/development/cxense_demo/login_app/src/dynamo_sample/gettin
  ログインしたときに、Cookieを書き換える。
  CXENSEへのIDの受け渡しは、ローカルのJavascriptで実行
 
+
+ PVをカウントアップするテーブルを作成し、そのカウントにあわせて、
+ Lamba関数を実行する。
+
 　show user all画面を表示されたときにカウントアップするデータを作成する。
 　　→カウントアップデータを監視し、Lambaでユーザデータの取得をする実装を行う。
 　　　→はじめはEC2で実装したあとに移行したほうがよい
 
+
+
+■Lamba利用方法
+
+＜Mixideaでの用法＞
+ - usecase1:関連記事の作成（DynamoDB＋Lamba連携）
+    Facebookログイン時に取得するユーザがLikeしたWebサイトのURLがDynaoDBに追加されたら、
+    （１）URLの本文抽出
+    　http://orangain.hatenablog.com/entry/content-extraction-from-html-in-python
+    （２）重要キーワード抽出
+    　http://qiita.com/ynakayama/items/234ad00ae520030217ab
+　　この二つを行い、URLに関連情報として付与しておく。
+　　（３）記事がCMSで追加されたときにも、重要キーワードを抽出し、
+　　　　外部記事の重要キーワードと内部記事の重要キーワードでマッチするものを掛け合わせることで
+　　　　類似記事をマッチングし、類似性が高い順にならべて内部記事に外部記事の関連づけをする。
+　　　　
+　- usecase2:FireBaseとの組み合わせによるコメント通知（API Gateway + Lamba連携）
+　   API GateWayを用い、
+　　
+
+ <CXENSE demoでの用法>
+ - usecase3: Crawlingデータからの関連語句抽出
+ 　　（１）Crawlingの実行
+ 　　     Lamba関数をscheduling実行して定期的にMenuPageをアップデートする。
+ 　　     内部にあるURLを抽出してDynamoDBに格納する。
+ 　　     同時に、MenuPageのWebサイト構成などもDynamoDBに追加してアップデートする。
+ 　　  （２）記事のScrapingをLambaで実行
+ 　　     URLが新規で追加されたときに、DynamoDBに追加されたことで、
+ 　　     Lambaがトリガーされ、URLをScrapingしてデータベースに記事のコンテンツを格納する。
+ 　　  （３）記事格納をトリガーにLamba実行
+ 　　  　　記事がDynamoDBに格納されると、それをトリガーに、Lambaが実行され、
+ 　　  　　格納された記事データをCXENSEに送信して記事情報となる。
+ 　　  （４）CXENSEキーワード抽出
+ 　　  　　　CXENSEがキーワード抽出できるようになるのがどのくらい時間がかかるのかがわからないが、
+ 　　  　　定期実行のときにLambaを実行し、キーワードが格納されていない記事がないかをチェックして、
+ 　　  　　なかった場合にキーワードを取得するAPIをたたく。
+ 　　     
+ - usecase4: ユーザデータの取得
+ 　　（１）PV時のデータアップデート
+ 　　　　デモの用途を考えると、ユーザデータは頻繁にかわってほしいが、
+ 　　　　あまりユーザがアクセスしないので定期実行はむだなので、
+ 　　　　ユーザがデモページをアクセスするごとにユーザデータをアップデートするコマンドを実行する。
+ 　　　　　　　　→ユーザ行動によりデータが更新されるのでちょうどよい。
+ 　　　　ユーザがページにアクセスするごとにDynamoDBのPVデータに
+ 　　　　ユーザIDとカウンターをインクリメントするデータを書き込む。
+ 　　（２）CXENSEのユーザデータの取得
+ 　　　　　　　DynamoDBがカウンターインクリメントで呼び出されるので、
+ 　　　　そのときに格納されているユーザIDを用いてCXENSEのユーザ情報取得APIを実行
+ 　　　ユーザデータベースにCXENSEから取得したデータを格納。
  
+Recording Serverにおいて、S3との接続で、鍵を用いているが、IMAに乗り換えたほうがよい。
+
+Amazon DynamoDB で AWS Lambda を使用する
+https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/with-ddb.html
+
+■４月２９日
+
+API　GateWayの、Make Synchronous Call to Lambda functionをやる。
+
+
+　Lambdaから、DynamoDBのデータを書き換えてみる。
+　　　→APIコールで渡したデータを、ただデータベースに書き込む。
+　　（１）API GatewayにおいてJSONでIDとnameをわたしてそれをDynamoDBに受け渡す。
+　　（２）DynamoDBに　Lambda_UpdateTest　というテーブルを作成（設定）
+　　（３）Lambda関数において、テーブルにIDとNameで上書きする。
+　　  （４）CloudWatchでも、ログが書き込まれているかどうかを確認する。
+
+　　　
+　DynamoDBからLambdaを呼び出してみる。
+　　→呼び出されたときのパラメータを出力
+　　　PVカウントにおいて、カウントされた数字を、Consoleで出力
+　　　
+　CXENSEのユーザデータの書き込み。
+   起動はDynamoDBのPVカウント
+　　　Firebase関数
+　　（１）DynamoDBのScanで全ユーザIDを読み込む。
+　   （２）全IDについて、CXENSEAPIの呼び出し
+　   （３）コールバックにて、取得したデータをDBに書き込む。
+　  EC2
+　  　現在、ユーザのデータを全取得しているところで、CXENSEのデータも出力
+
+認証アルゴリズムは、JWTとかいろいろあるが、自作のアルゴリズムにする。
+＜処理フロー＞
+　　（１）ログイン時に、TUUIDとSessionIDの連結したものををユーザのパスワードのHash値を用いてKeyHashを実行したものをMacとして用いて、SetCookieしておく。
+　　（２）DBのユーザには最新のSessionIDを保存しておく。
+　　  (３)ユーザは、APIコールするときには、SessionIDとTUUIDとMac値をサーバに送信
+　　  （４）サーバは、MacをユーザのHashedPasswordで複合
+　　  （５）複合したデータがTUUIDと最新のSessionIDとマッチしていたら認証Okay
+　　  
+　＜セキュリティの理論＞
+　　ログインしたときに、PasswordをもったユーザしかMacは作成できない。
+　　  Macを確認できるのは、ユーザのPasswordをもつサーバのみ。
+　　  ユーザが他のIDのデータを変更しようとしても、Macの計算ができないので、Mac認証ではじかれる。
+　　  仮に、だれかが別の人のSessionIDとユーザIDとMacを奪った場合にも、SessionがExpireしていると用いることができない。
+　　　　Session + IDを元データにするのは、Macの元データに乱数と同等の役割をするSessionIDをいれることで、Macの値が毎回かわる。
+
+＜実装順序＞
+　　（１）ログイン時のMacの作成とSetCookieを行う。
+　　　　(2)APIを実行するボタンをヘッダに作る。
+　　　 (3)JsonにCookieからsession id, mac, useridを格納してHeaderにAuthとして設定して、APIを実行する。
+　　　 (4)API Gatewayを作成、cxenseapi
+　　　    →リソースで、userinfo_updateを作り、GetでLambdaにつなげる。
+　　　 （５）Authで、DynamoDBにつなげて、認証を行えるようにする。
+　　　 （６）userinfo_updateでCXENSEコマンドを実行し、DynamoDBにデータ格納。
+
+
+
+
+
+　　　
+　　　
+　　　
+　　　
+　　　　
+　　　　
+　　　　
+　　　　
+　
+　
+　
 

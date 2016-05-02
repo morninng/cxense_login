@@ -66,6 +66,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 var tuuid = require('./src/tuuid.js');
 app.use(tuuid.set_tuuid);
 
+var pv = require('./src/pv.js');
+app.use(pv.count);
+
+
+
 app.use('/', routes);
 app.use('/users', users);
 

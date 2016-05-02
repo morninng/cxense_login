@@ -1,0 +1,87 @@
+d
+
+
+■Step 3.1: Create the API
+
+API作成
+aws apigateway create-rest-api --name DynamoDBOperations
+
+-> response
+  {
+    "name": "DynamoDBOperations", 
+    "id": "5n1ezf3iwc", 
+    "createdDate": 1461815433
+  }
+
+リソースID取得
+aws apigateway get-resources --rest-api-id 5n1ezf3iwc
+{"items": 
+   [
+        {"path": "/", "id": "j7yykjrt7c"}
+    ]
+ }
+
+＜リソース作成＞
+aws apigateway create-resource --rest-api-id 5n1ezf3iwc --parent-id j7yykjrt7c --path-part DynamoDBManager
+{
+    "path": "/DynamoDBManager", 
+    "pathPart": "DynamoDBManager", 
+    "id": "rwbfhn", 
+    "parentId": "j7yykjrt7c"
+}
+
+＜メソッド作成＞
+aws apigateway put-method --rest-api-id 5n1ezf3iwc --resource-id rwbfhn --http-method POST --authorization-type NONE
+{
+    "apiKeyRequired": false, 
+    "httpMethod": "POST", 
+    "authorizationType": "NONE"
+}
+
+＜LambdaとAPIの関連づけ＞
+
+オリジナル
+aws apigateway put-integration \
+--rest-api-id api-id \
+--resource-id resource-id \
+--http-method POST \
+--type AWS \
+--integration-http-method POST \
+--uri arn:aws:apigateway:aws-region:lambda:path/2015-03-31/functions/arn:aws:lambda:aws-region:aws-acct-id:function:your-lambda-function-name/invocations
+
+
+調節後
+aws apigateway put-integration \
+--rest-api-id 5n1ezf3iwc \
+--resource-id j7yykjrt7c \
+--http-method POST \
+--type AWS \
+--integration-http-method POST \
+--uri arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:494806557253:function:First_Lambda_with_apigateway/invocations
+
+aws apigateway put-integration \
+--rest-api-id 5n1ezf3iwc \
+--resource-id j7yykjrt7c \
+--http-method POST \
+--type AWS \
+--integration-http-method POST \
+--uri arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda::494806557253:function:First_Lambda_with_apigateway/invocations
+
+下記のエラーがでる。
+A client error (NotFoundException) occurred when calling the PutIntegration operation: Invalid Method identifier specified
+
+
+api gateway arn
+arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/
+tions/
+
+lambda function arn
+arn:aws:lambda:us-east-1:494806557253:function:First_Lambda_with_apigateway
+
+
+arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:494806557253:function:First_Lambda_with_apigateway/invocations
+
+■
+
+
+

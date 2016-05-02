@@ -1,0 +1,30 @@
+<html>
+
+
+<head>
+	<script src="https://code.jquery.com/jquery-2.2.3.js"></script>
+
+</head>
+
+<body>
+
+
+<script>
+$.ajax({
+  url: 'https://ayezw7de4c.execute-api.us-east-1.amazonaws.com/dd/',
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization':'allow'
+  }
+}).done(function(data) {
+    console.log(data);
+}).fail(function(data){
+	console.log(data);
+});
+
+</script>
+
+
+</body>
+</html>
