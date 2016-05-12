@@ -146,19 +146,20 @@ Recording Serverにおいて、S3との接続で、鍵を用いているが、IM
 Amazon DynamoDB で AWS Lambda を使用する
 https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/with-ddb.html
 
+
+
 ■４月２９日
 
 API　GateWayの、Make Synchronous Call to Lambda functionをやる。
-
 
 　Lambdaから、DynamoDBのデータを書き換えてみる。
 　　　→APIコールで渡したデータを、ただデータベースに書き込む。
 　　（１）API GatewayにおいてJSONでIDとnameをわたしてそれをDynamoDBに受け渡す。
 　　（２）DynamoDBに　Lambda_UpdateTest　というテーブルを作成（設定）
 　　（３）Lambda関数において、テーブルにIDとNameで上書きする。
-　　  （４）CloudWatchでも、ログが書き込まれているかどうかを確認する。
+　　（４）CloudWatchでも、ログが書き込まれているかどうかを確認する。
 
-　　　
+
 　DynamoDBからLambdaを呼び出してみる。
 　　→呼び出されたときのパラメータを出力
 　　　PVカウントにおいて、カウントされた数字を、Consoleで出力
@@ -195,20 +196,4 @@ API　GateWayの、Make Synchronous Call to Lambda functionをやる。
 　　　    →リソースで、userinfo_updateを作り、GetでLambdaにつなげる。
 　　　 （５）Authで、DynamoDBにつなげて、認証を行えるようにする。
 　　　 （６）userinfo_updateでCXENSEコマンドを実行し、DynamoDBにデータ格納。
-
-
-
-
-
-　　　
-　　　
-　　　
-　　　
-　　　　
-　　　　
-　　　　
-　　　　
-　
-　
-　
 

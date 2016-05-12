@@ -168,5 +168,58 @@ docClient.query(params, function(err, data) {
 });
 
 
+------
+
+ set tuuid as a 
 
 
+var params = {
+    TableName: "User",
+    AttributeDefinitions:[
+        {AttributeName: "tuuid", AttributeType: "S"}
+    ],
+    GlobalSecondaryIndexUpdates: [
+        {
+            Create: {
+                IndexName: "TuuidIndex",
+                KeySchema: [
+                    {AttributeName: "tuuid", KeyType: "HASH"},  //Partition key
+                ],
+                Projection: {
+                    "ProjectionType": "ALL"
+                },
+                ProvisionedThroughput: {
+                    "ReadCapacityUnits": 1,"WriteCapacityUnits": 1
+                }
+            }
+        }
+    ]
+};
+
+dynamodb.updateTable(params, function(err, data) {
+    if (err)
+        console.log(JSON.stringify(err, null, 2));
+    else
+        console.log(JSON.stringify(data, null, 2));
+});
+
+
+--
+query by tuuid
+
+var params = {
+    TableName: "User",
+    IndexName: "TuuidIndex",
+    KeyConditionExpression: "tuuid = :tuuid_value",
+    ExpressionAttributeValues: {
+        ":tuuid_value": "57ee794c-ad70-4849-8cdf-3e2e006cf78d"
+    },
+    ProjectionExpression: "first_name, last_name, email"
+};
+
+docClient.query(params, function(err, data) {
+    if (err)
+        console.log(JSON.stringify(err, null, 2));
+    else
+        console.log(JSON.stringify(data, null, 2));
+});

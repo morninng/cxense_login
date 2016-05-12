@@ -14,13 +14,13 @@ db.YYY.drop()
 
 
 sudo ssh -i "/home/morninng/dac/cxense-aws-key.pem" ubuntu@ec2-52-201-227-98.compute-1.amazonaws.com
+sudo ssh -i "/home/morninng/dac/cxense-aws-key.pem" moriyama@ec2-52-201-227-98.compute-1.amazonaws.com
 
 
-sudo rsync -avz -e "ssh -i /home/morninng/dac/cxense-aws-key.pem" --exclude='node_modules/*' /home/morninng/dac/development/cxense_demo/login_app ubuntu@ec2-54-209-201-218.compute-1.amazonaws.com:/home/ubuntu/source
 
 
 
-sudo rsync -avz -e "ssh -i /home/morninng/dac/cxense-aws-key.pem" --exclude='node_modules/*' /home/morninng/dac/development/cxense_demo/login_app ubuntu@ec2-52-201-227-98.compute-1.amazonaws.com:/home/ubuntu/source
+sudo rsync -avz -e "ssh -i /home/morninng/dac/cxense-aws-key.pem" --exclude='node_modules/*' /home/morninng/dac/development/cxense_demo/login_app ubuntu@ec2-52-201-227-98.compute-1.amazonaws.com:/home/ubuntu/source/moriyama
 
 
 
@@ -33,13 +33,10 @@ java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb
  　　http://localhost:8000/shell
 
 
-
  git filter-branch --tree-filter 'rm -f src/cxense.conf' HEAD
 
 
 node bin/www
  http://52.201.227.98:3000/
- 
- 
- 
+
 

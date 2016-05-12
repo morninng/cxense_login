@@ -9,6 +9,7 @@ var session = require('express-session');
 
 var routes = require('./routes/index_router');
 var users = require('./routes/users_router');
+var config_common = require('./src/config_common.conf')
 var ECT = require('ect');
 var app = express();
 
@@ -42,7 +43,7 @@ var DynamoDBStore = require('connect-dynamodb')({session: session});
   app.use(require('express-session')({
     secret: 'morninng',
     cookie: {
-      maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week 
+      maxAge: config_common.session_maxage
     },
     store: store
   }));
@@ -62,9 +63,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+/*
 var tuuid = require('./src/tuuid.js');
 app.use(tuuid.set_tuuid);
+*/
 
 var pv = require('./src/pv.js');
 app.use(pv.count);

@@ -4,6 +4,7 @@
 var dynamo = require('./dynamo');
 var docClient = dynamo.docClient;
 
+
 var create_user = function(user_data, callback){
 
 	var params = {
@@ -21,6 +22,30 @@ var create_user = function(user_data, callback){
 	docClient.put(params, callback);
 
 };
+
+
+var update_user = function(primary_key_value, update_key, update_value ){
+
+	var params = {
+	    TableName:"User",
+	    Key:{
+	    	"email": primary_key_value
+	    },
+		UpdateExpression: "set " + update_key + " = :value",
+		ExpressionAttributeValues:{
+			":value":update_value
+		},
+		ReturnValues:"UPDATED_NEW"
+	};   
+	docClient.update(params, function(err, data) {
+	    if (err) {
+	        console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
+	    } else {
+	        console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
+	    }
+	});
+
+}
 
 
 var retrieve_user_all = function(callback){
@@ -77,5 +102,6 @@ module.exports = {
 	create_user: create_user,
 	retrieve_user_all: retrieve_user_all,
 	check_user_existence: check_user_existence,
-	get_user_status: get_user_status
+	get_user_status: get_user_status,
+	update_user: update_user
 }

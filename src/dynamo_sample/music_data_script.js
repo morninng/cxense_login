@@ -65,7 +65,9 @@ var params = {
     Item: {
         "artist":"utada hikaru",
         "songTitle":"tell me",
-        "detail":"this is the first album"
+        "detail":"this is the first album",
+        "genre":"Country",
+        "Price":100
     },
     "ConditionExpression": "attribute_not_exists(artist) and attribute_not_exists(songTitle)"
 };
@@ -81,7 +83,9 @@ var params = {
     Item: {
         "artist":"utada hikaru",
         "songTitle":"again",
-        "detail":"this is the first album"
+        "detail":"this is the first album",
+        "genre":"Country",
+        "Price":200
     },
     "ConditionExpression": "attribute_not_exists(artist) and attribute_not_exists(songTitle)"
 };
@@ -97,7 +101,9 @@ var params = {
     Item: {
         "artist":"utada hikaru",
         "songTitle":"ashita",
-        "detail":"this is the second album"
+        "detail":"this is the second album",
+        "genre":"Popular",
+        "Price":200
     },
     "ConditionExpression": "attribute_not_exists(artist) and attribute_not_exists(songTitle)"
 };
@@ -113,7 +119,9 @@ var params = {
     Item: {
         "artist":"smap",
         "songTitle":"himawari",
-        "detail":"oretachi"
+        "detail":"oretachi",
+        "genre":"Jpop",
+        "Price":500
     },
     "ConditionExpression": "attribute_not_exists(artist) and attribute_not_exists(songTitle)"
 };
@@ -276,7 +284,7 @@ docClient.query(params, function(err, data) {
  Scan all the data
 
  var params = {
-    TableName: "sessions"
+    TableName: "Music"
 };
 
 docClient.scan(params, function(err, data) {
@@ -289,9 +297,8 @@ docClient.scan(params, function(err, data) {
 -- 
 Scan partial data
 
-
  var params = {
-    TableName: "PV_COUNT"
+    TableName: "User"
 };
 
 docClient.scan(params, function(err, data) {
@@ -304,7 +311,7 @@ docClient.scan(params, function(err, data) {
 -------------delete table---------
 
 var params = {
-    TableName: "Movies"
+    TableName: "Music"
 };
 
 dynamodb.deleteTable(params, function(err, data) {
@@ -320,6 +327,114 @@ var params = {
 };
 
 dynamodb.deleteTable(params, function(err, data) {
+    if (err)
+        console.log(JSON.stringify(err, null, 2));
+    else
+        console.log(JSON.stringify(data, null, 2));
+});
+
+
+
+----------------------------------
+add secondary index to user
+
+-
+create secondary index
+
+
+
+var params = {
+    TableName: "Music",
+    AttributeDefinitions:[
+        {AttributeName: "genre", AttributeType: "S"},
+        {AttributeName: "Price", AttributeType: "N"}
+    ],
+    GlobalSecondaryIndexUpdates: [
+        {
+            Create: {
+                IndexName: "GenreAndPriceIndex",
+                KeySchema: [
+                    {AttributeName: "genre", KeyType: "HASH"},  //Partition key
+                    {AttributeName: "Price", KeyType: "RANGE"},  //Sort key
+                ],
+                Projection: {
+                    "ProjectionType": "ALL"
+                },
+                ProvisionedThroughput: {
+                    "ReadCapacityUnits": 1,"WriteCapacityUnits": 1
+                }
+            }
+        }
+    ]
+};
+
+dynamodb.updateTable(params, function(err, data) {
+    if (err)
+        console.log(JSON.stringify(err, null, 2));
+    else
+        console.log(JSON.stringify(data, null, 2));
+});
+
+
+--
+query with secondary index
+
+https://docs.aws.amazon.com/ja_jp/amazondynamodb/latest/gettingstartedguide/GettingStarted.JsShell.06.html
+
+
+var params = {
+    TableName: "Music",
+    IndexName: "GenreAndPriceIndex",
+    KeyConditionExpression: "genre = :genre",
+    ExpressionAttributeValues: {
+        ":genre": "Country"
+    },
+    ProjectionExpression: "songTitle, Price, artist"
+};
+
+docClient.query(params, function(err, data) {
+    if (err)
+        console.log(JSON.stringify(err, null, 2));
+    else
+        console.log(JSON.stringify(data, null, 2));
+});
+
+
+
+quer with ConditionExpression
+
+
+var params = {
+    TableName: "Music",
+    IndexName: "GenreAndPriceIndex",
+    KeyConditionExpression: "genre = :genre and Price > :price",
+    ExpressionAttributeValues: {
+        ":genre": "Country",
+        ":price": 20
+    },
+    ProjectionExpression: "songTitle, Price"
+};
+docClient.query(params, function(err, data) {
+    if (err)
+        console.log(JSON.stringify(err, null, 2));
+    else
+        console.log(JSON.stringify(data, null, 2));
+});
+
+
+
+
+--
+
+scan with secondary index
+
+var params = {
+    TableName: "Music",
+    IndexName: "GenreAndPriceIndex",
+    ProjectionExpression: "Genre, Price, SongTitle, Artist, AlbumTitle"
+};
+
+docClient.scan(params, function(err, data) {
     if (err)
         console.log(JSON.stringify(err, null, 2));
     else

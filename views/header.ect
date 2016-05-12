@@ -4,9 +4,11 @@
 <div class="header_container">
 	<div class="header_left">
 	 <a href="/">Home</a>
-	</div
+	</div>
+	
 
 	<div class="header_right">
+		<input type="button" value="update user info" onClick="update_userinfo()">
 		<% if @header.user : %>
 			<span class="user_name"> <%- @header.name %></span>
 			<input type="button" value="logout" onClick="logout()">

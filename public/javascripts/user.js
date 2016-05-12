@@ -1,5 +1,29 @@
 
 
+var update_userinfo = function(){
+	console.log("update_userinfo");
+	var auth_jwt = create_jwt();
+	var auth_jwt_str = JSON.stringify(auth_jwt)
+
+	//auth_jwt="allow"
+
+	$.ajax({
+	  url: 'https://zolduiowmi.execute-api.us-east-1.amazonaws.com/2/userinfo-update',
+	  method: 'GET',
+	  headers: {
+	    'Content-Type': 'application/json',
+	    'Authorization':auth_jwt_str
+	  }
+	}).done(function(data) {
+	    console.log(data);
+	}).fail(function(data){
+		console.log(data);
+	});t
+
+}
+
+
+
 var send_user_data_login = function(){
 	var mail_address = document.login_form.email.value;
 	var password_str = document.login_form.password.value;

@@ -1,6 +1,5 @@
 
 
-<script type="text/javascript" src="/javascripts/cxense.js"></script>
 
 
 <!-- Cxense script begin -->
@@ -8,6 +7,7 @@
 var cX = cX || {}; cX.callQueue = cX.callQueue || [];
 
 var tuuid = get_tuuid();
+console.log("id to be mapped " + tuuid);
 cX.callQueue.push(['addExternalId', {'id': tuuid, 'type': 'dac'}]);
 cX.callQueue.push(['setSiteId', '1128275557251903601']);
 cX.callQueue.push(['sendPageViewEvent']);

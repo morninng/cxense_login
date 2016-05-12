@@ -1,5 +1,8 @@
 var express = require('express');
 var crypto = require("crypto");
+var uuid = require('uuid');
+var config_common = require('./../src/config_common.conf')
+
 var router = express.Router();
 //var model_user = require( './../src/model_user_mongo' );
 var model_user = require( './../src/model_user_dynamo' );
@@ -29,7 +32,12 @@ router.post('/sign_in', function(req, res){
 		sha512.update(password);
 		var hashed_password = sha512.digest('hex');
 		user_data["hashed_password"] = hashed_password;
-		user_data["tuuid"] = req.cookies.tuuid;
+		user_data["tuuid"] = uuid.v4();
+		var date = new Date();
+		var temporal_random = date.getTime();
+		user_data["temporal_random"] = temporal_random;
+		res.cookie('tuuid', user_data["tuuid"], {maxAge: config_common.session_maxage, httpOnly:false});
+
 		model_user.create_user(user_data, function(err, obj){
 			if(err){
 				res.json({result:false, message:"saving data failed"});
@@ -37,6 +45,13 @@ router.post('/sign_in', function(req, res){
 				req.session.user = new Object();
 				req.session.user.first_name = user_data["first_name"];
 				req.session.user.last_name = user_data["last_name"];
+				req.session.user.temporal_random = temporal_random;
+				res.cookie('temporal_random', temporal_random, {maxAge: config_common.session_maxage, httpOnly:false});
+
+				var message = email_address + String(temporal_random);
+				var hmac_sha256 = crypto.createHash('sha256', stored_hashed_password);
+				var mac = hmac_sha256.update(message).digest('hex');
+				res.cookie('mac', mac, {maxAge: config_common.session_maxage, httpOnly:false});
 				res.json({result:true, message:"user data has been registered successfully"});
 			}
 		})
@@ -50,6 +65,8 @@ router.get('/login', function(req, res, next) {
 
   res.render('login', {header: header_obj});
 });
+
+
 
 router.post('/log_in', function(req, res){
 	var user_data = req.body;
@@ -74,7 +91,19 @@ router.post('/log_in', function(req, res){
 				req.session.user.first_name = user["first_name"];
 				req.session.user.last_name = user["last_name"];
 				var tuuid = user["tuuid"];
-				res.cookie('tuuid', tuuid, {maxAge:60000, httpOnly:false});	
+				res.cookie('tuuid', tuuid, {maxAge:config_common.session_maxage, httpOnly:false});
+					
+				var date = new Date();
+				var temporal_random = date.getTime();
+				req.session.user.temporal_random = temporal_random;
+				res.cookie('temporal_random', temporal_random, {maxAge: config_common.session_maxage, httpOnly:false});
+				model_user.update_user(email_address, 'temporal_random', temporal_random);
+
+				var message = email_address + String(temporal_random);
+				var hmac_sha256 = crypto.createHash('sha256', stored_hashed_password);
+				var mac = hmac_sha256.update(message).digest('hex');
+				res.cookie('mac', mac, {maxAge: config_common.session_maxage, httpOnly:false});
+
 				res.json({result:true, message:"login succeed"});
 			}else{
 				res.json({result:false, message:"password and e-mail does not match"});
@@ -82,6 +111,8 @@ router.post('/log_in', function(req, res){
 		}
 	})
 });
+
+
 
 router.get('/logout', function(req, res){
 
