@@ -19,7 +19,6 @@ sudo ssh -i "/home/morninng/dac/cxense-aws-key.pem" moriyama@ec2-52-201-227-98.c
 
 
 
-
 sudo rsync -avz -e "ssh -i /home/morninng/dac/cxense-aws-key.pem" --exclude='node_modules/*' /home/morninng/dac/development/cxense_demo/login_app ubuntu@ec2-52-201-227-98.compute-1.amazonaws.com:/home/ubuntu/source/moriyama
 
 
@@ -39,4 +38,9 @@ java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb
 node bin/www
  http://52.201.227.98:3000/
 
+
+
+
+redirect the port
+sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 3000
 

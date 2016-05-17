@@ -4,6 +4,22 @@
 
 <% for user in @users : %>
 <div>
- <%- user.first_name %>  <%- user.last_name %>   <%- user.age %> mail:  <%- user.email %> 
+
+  <h2>user info</h2>
+  <div>
+ 	<%- user.first_name %>  <%- user.last_name %>   <%- user.age %> mail:  <%- user.email %> <%- user.traffic_event %>  <%- user.tuuid %> 
+  </div><br>
+
+  <h3>cxense info</h3>
+  <div>
+   <% if user.profile_user : %> 
+     <%- user.profile_user.id %> 
+	 <% for profile in user.profile_user.profile : %>
+	    <br>
+		<%- profile.item %>  : <%- profile.groups[0].weight %>
+	 <% end %>
+   <% end %>
+  </div>
+
 </div>
 <% end %>

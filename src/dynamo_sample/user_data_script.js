@@ -120,7 +120,7 @@ read the data from email address
 var params = { 
     TableName: "User",
     Key: {
-        "email":"yuta.moriyama@gmmail.com"
+        "email":"aa@bb"
     }
 };
 
@@ -195,7 +195,6 @@ var params = {
         }
     ]
 };
-
 dynamodb.updateTable(params, function(err, data) {
     if (err)
         console.log(JSON.stringify(err, null, 2));
@@ -205,7 +204,8 @@ dynamodb.updateTable(params, function(err, data) {
 
 
 --
-query by tuuid
+query by tuuid and update primary table
+
 
 var params = {
     TableName: "User",
@@ -216,10 +216,117 @@ var params = {
     },
     ProjectionExpression: "first_name, last_name, email"
 };
-
 docClient.query(params, function(err, data) {
+    if (err){
+        console.log(JSON.stringify(err, null, 2));
+    }
+    else{
+        console.log("user is found")
+        console.log(JSON.stringify(data, null, 2));
+        var email_address = data.Items[0].email;
+        if(email_address){
+            console.log(email_address)
+            update_name(email_address, "jijiji", "kokokoko")
+        }
+    }
+});
+function update_name(in_email, in_attr_name, in_attr_value){
+    var params = {
+        TableName: "User",
+        Key: {
+            "email":in_email
+        },
+        UpdateExpression: "SET #attribute_name = :attribute_value",
+        ExpressionAttributeValues: { 
+            ":attribute_value": in_attr_value
+        },
+        ExpressionAttributeNames: {
+            "#attribute_name": in_attr_name
+        },
+        ReturnValues: "ALL_NEW"
+    };
+    docClient.update(params, function(err, data) {
+        if (err)
+            console.log(JSON.stringify(err, null, 2));
+        else
+            console.log(JSON.stringify(data, null, 2));
+    });
+}
+
+
+
+
+//////////////update user data
+
+// key is primary key
+
+var params = {
+    TableName: "User",
+    Key: {
+        "email":"aa@bb"
+    },
+    UpdateExpression: "SET first_name = :label",
+    ExpressionAttributeValues: { 
+        ":label": "oraoraora"
+    },
+    ReturnValues: "ALL_NEW"
+};
+
+docClient.update(params, function(err, data) {
     if (err)
         console.log(JSON.stringify(err, null, 2));
     else
         console.log(JSON.stringify(data, null, 2));
 });
+
+var params = {
+    TableName: "User",
+    Key: {
+        "email":"aa@bb"
+    },
+    UpdateExpression: "SET #k = :label",
+    ExpressionAttributeValues: { 
+        ":label": "aaa"
+    },
+    ExpressionAttributeNames: {
+        "#k": "asasas"
+    },
+    ReturnValues: "ALL_NEW"
+};
+
+docClient.update(params, function(err, data) {
+    if (err)
+        console.log(JSON.stringify(err, null, 2));
+    else
+        console.log(JSON.stringify(data, null, 2));
+});
+
+
+
+////////
+
+ updating the data throuth global secondary index does not work
+ we need to get the primary key through secondary index and 
+  update the data of global data 
+
+/*
+var params = {
+    TableName: "User",
+    IndexName: "TuuidIndex",
+    KeyConditionExpression: "tuuid = :tuuid_value",
+    ExpressionAttributeValues: {
+        ":tuuid_value": "57ee794c-ad70-4849-8cdf-3e2e006cf78d",
+        ":label": "ZZZZZZZZZZZZZZZz"
+    },
+    UpdateExpression: "SET first_name = :label",
+    ReturnValues: "ALL_NEW"
+};
+
+docClient.update(params, function(err, data) {
+    if (err)
+        console.log(JSON.stringify(err, null, 2));
+    else
+        console.log(JSON.stringify(data, null, 2));
+});
+*/
+

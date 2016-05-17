@@ -196,4 +196,12 @@ API　GateWayの、Make Synchronous Call to Lambda functionをやる。
 　　　    →リソースで、userinfo_updateを作り、GetでLambdaにつなげる。
 　　　 （５）Authで、DynamoDBにつなげて、認証を行えるようにする。
 　　　 （６）userinfo_updateでCXENSEコマンドを実行し、DynamoDBにデータ格納。
+　　　 
+■CXENSEのデータのAllShow画面への表示
+　AllShowの画面において、ユーザIDをすべて読み込む。
+　それをとりあえず表示する。
+　
+　
+
+
 

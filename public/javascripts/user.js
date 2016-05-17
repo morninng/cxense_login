@@ -18,7 +18,7 @@ var update_userinfo = function(){
 	    console.log(data);
 	}).fail(function(data){
 		console.log(data);
-	});t
+	});
 
 }
 

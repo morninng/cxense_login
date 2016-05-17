@@ -1,3 +1,5 @@
+http://docs.aws.amazon.com/ja_jp/amazondynamodb/latest/gettingstartedguide/GettingStarted.JsShell.07.html
+
 ---------------------------------
 (1) create user table
 
@@ -44,7 +46,7 @@ dynamodb.listTables(params, function(err, data) {
 check table info
 
 var params = {
-    TableName: "sessions"
+    TableName: "User"
 };
 dynamodb.describeTable(params, function(err, data) {
     if (err)
@@ -440,4 +442,7 @@ docClient.scan(params, function(err, data) {
     else
         console.log(JSON.stringify(data, null, 2));
 });
+
+
+
 

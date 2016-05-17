@@ -16,6 +16,7 @@ AWS.config.update({
  var aws_client = new AWS.DynamoDB();
 var docClient = new AWS.DynamoDB.DocumentClient();
 
+
 module.exports = {
 	docClient: docClient,
 	aws_client: aws_client

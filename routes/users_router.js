@@ -120,6 +120,7 @@ router.get('/logout', function(req, res){
 	res.send();
 });
 
+/*the url is http://localhost:3000/users/show_all_users */
 
 router.get('/show_all_users', function(req, res){
 	console.log("show_all_users");
