@@ -21,3 +21,14 @@ a {
 	float: left;
 }
 
+
+
+.user_info_row{
+	display:table-row;
+}
+.user_info_cell{
+	display:table-cell;
+	padding:10px;
+	text-align:center;
+	border: thin solid 	#000000;
+}

@@ -1,6 +1,10 @@
 
+<html>
 
-
+<head>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
 
 <% for user in @users : %>
 <div style="border-style: solid double;">
@@ -16,8 +20,14 @@
      <% if user.profile_user.profile : %>
        <h2 style="font-weight:bold">profile user infomation</h2>
   	   <% for profile in user.profile_user.profile : %>
-  	     <br>
-  		    <%- profile.item %>  : <%- profile.groups[0].weight %>
+  	     <div class="user_info_row">
+            <div class="user_info_cell">
+    		      <%- profile.item %>
+            </div>
+            <div class="user_info_cell">       
+               <%- profile.groups[0].weight %>
+            </div>
+          </div>
   	   <% end %>
       <% end %>
    <% end %>
@@ -29,13 +39,21 @@
        <h2 style="font-weight:bold">traffice event information</h2>
        <% for group_each in user.traffic_event.groups : %>
          <br>
-          <span style="font-weight:bold">
+          <div style="font-weight:bold">
             <%- group_each.group %>
-          </span>
-
-          <% for item in group_each.items : %>
-            <br><%- item.item %> : <%- item.data.events %>
-          <% end %>
+          </div>
+          <div>
+            <% for item in group_each.items : %>
+             <div class="user_info_row">
+                <div class="user_info_cell">
+                  <%- item.item %>
+                </div>
+                <div class="user_info_cell">    
+                  <%- item.data.events %>
+                </div>
+             </div>
+            <% end %>
+          </div>
        <% end %>
       <% end %>
    <% end %>
@@ -47,12 +65,24 @@
        <h2 style="font-weight:bold">traffice keyword information</h2>
        <% for group_each in user.traffic_keyword.groups : %>
          <br>
-         <span style="font-weight:bold">
+         <div style="font-weight:bold">
           <%- group_each.group %>
-         </span>
+         </div>
+
           <% for item in group_each.items : %>
-            <br><%- item.item %>  --  event: <%- item.data.events %> -- weight: <%- item.data.events %>
+           <div class="user_info_row">
+              <div class="user_info_cell">
+                <%- item.item %>
+              </div>
+              <div class="user_info_cell">   
+                --  event: <%- item.data.events %>
+              </div>
+              <div class="user_info_cell">   
+                 -- weight: <%- item.data.events %>
+              </div>
+           </div>
           <% end %>
+
        <% end %>
       <% end %>
    <% end %>
@@ -60,3 +90,6 @@
 
 </div>
 <% end %>
+
+</body>
+</html>
