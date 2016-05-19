@@ -3,21 +3,58 @@
 
 
 <% for user in @users : %>
-<div>
+<div style="border-style: solid double;">
 
-  <h2>user info</h2>
+  <h1>user info</h1>
   <div>
- 	<%- user.first_name %>  <%- user.last_name %>   <%- user.age %> mail:  <%- user.email %> <%- user.traffic_event %>  <%- user.tuuid %> 
+ 	<%- user.first_name %>  <%- user.last_name %>   <%- user.age %> mail:  <%- user.email %>  <%- user.tuuid %> 
   </div><br>
 
-  <h3>cxense info</h3>
+  <h1>cxense info</h1>
   <div>
    <% if user.profile_user : %> 
-     <%- user.profile_user.id %> 
-	 <% for profile in user.profile_user.profile : %>
-	    <br>
-		<%- profile.item %>  : <%- profile.groups[0].weight %>
-	 <% end %>
+     <% if user.profile_user.profile : %>
+       <h2 style="font-weight:bold">profile user infomation</h2>
+  	   <% for profile in user.profile_user.profile : %>
+  	     <br>
+  		    <%- profile.item %>  : <%- profile.groups[0].weight %>
+  	   <% end %>
+      <% end %>
+   <% end %>
+  </div>
+
+  <div>
+   <% if user.traffic_event : %> 
+     <% if user.traffic_event.groups : %>
+       <h2 style="font-weight:bold">traffice event information</h2>
+       <% for group_each in user.traffic_event.groups : %>
+         <br>
+          <span style="font-weight:bold">
+            <%- group_each.group %>
+          </span>
+
+          <% for item in group_each.items : %>
+            <br><%- item.item %> : <%- item.data.events %>
+          <% end %>
+       <% end %>
+      <% end %>
+   <% end %>
+  </div>
+
+  <div>
+   <% if user.traffic_keyword : %> 
+     <% if user.traffic_keyword.groups : %>
+       <h2 style="font-weight:bold">traffice keyword information</h2>
+       <% for group_each in user.traffic_keyword.groups : %>
+         <br>
+         <span style="font-weight:bold">
+          <%- group_each.group %>
+         </span>
+          <% for item in group_each.items : %>
+            <br><%- item.item %>  --  event: <%- item.data.events %> -- weight: <%- item.data.events %>
+          <% end %>
+       <% end %>
+      <% end %>
    <% end %>
   </div>
 

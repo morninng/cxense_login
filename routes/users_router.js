@@ -49,7 +49,7 @@ router.post('/sign_in', function(req, res){
 				res.cookie('temporal_random', temporal_random, {maxAge: config_common.session_maxage, httpOnly:false});
 
 				var message = email_address + String(temporal_random);
-				var hmac_sha256 = crypto.createHash('sha256', stored_hashed_password);
+				var hmac_sha256 = crypto.createHash('sha256', hashed_password);
 				var mac = hmac_sha256.update(message).digest('hex');
 				res.cookie('mac', mac, {maxAge: config_common.session_maxage, httpOnly:false});
 				res.json({result:true, message:"user data has been registered successfully"});

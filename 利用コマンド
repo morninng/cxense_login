@@ -14,6 +14,7 @@ db.YYY.drop()
 
 
 sudo ssh -i "/home/morninng/dac/cxense-aws-key.pem" ubuntu@ec2-52-201-227-98.compute-1.amazonaws.com
+
 sudo ssh -i "/home/morninng/dac/cxense-aws-key.pem" moriyama@ec2-52-201-227-98.compute-1.amazonaws.com
 
 
@@ -44,3 +45,5 @@ node bin/www
 redirect the port
 sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 3000
 
+lsof -i:80
+kill XXX
